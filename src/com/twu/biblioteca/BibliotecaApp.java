@@ -9,4 +9,9 @@ public class BibliotecaApp {
   public String welcome() {
     return "Welcome to the library.";
   }
+
+  public String[] getAllBooks(){
+    String[] allBooks = {"The Hobbit","Game of Thrones"};
+    return allBooks;
+  }
 }

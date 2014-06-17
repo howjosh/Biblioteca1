@@ -1,7 +1,13 @@
 package com.twu.biblioteca;
 
 import org.junit.Test;
+
+import java.io.PrintStream;
+
+import static org.mockito.Mockito.mock;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.verify;
+
 
 /**
  * Created by richiethomas on 6/17/14.
@@ -10,8 +16,9 @@ public class TestWelcomeMessage {
 
   @Test
   public void testWelcomeMessage() {
-    BibliotecaApp bibby = new BibliotecaApp();
-    String welcome = bibby.welcome();
-    assertEquals(welcome, "Welcome to the library.");
+    PrintStream printStream = mock(PrintStream.class);
+    WelcomeMessage message = new WelcomeMessage(printStream);
+    message.display();
+    verify(printStream).println("Welcome!");
   }
 }
