@@ -6,7 +6,7 @@ public class BibliotecaApp {
 
   public static void main(String[] args) {
 
-    BiblioMessage message = new BiblioMessage(System.out);
+    MessagePrinter message = new MessagePrinter(System.out);
     String[] listOfBooks = {"The Hobbit", "GoT"};
 
 

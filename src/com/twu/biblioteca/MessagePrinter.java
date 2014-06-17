@@ -5,12 +5,12 @@ import java.io.PrintStream;
 /**
  * Created by richiethomas on 6/17/14.
  */
-public class BiblioMessage {
+public class MessagePrinter {
 
   private PrintStream out;
   private String message;
 
-  public BiblioMessage(PrintStream out) {
+  public MessagePrinter(PrintStream out) {
     this.out = out;
   }
 

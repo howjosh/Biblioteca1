@@ -14,11 +14,12 @@ public class TestListBooks {
   public void testListBooks(){
     BookList bookList = new BookList();
     PrintStream printStream = mock(PrintStream.class);
-    BiblioMessage message = new BiblioMessage(printStream);
+    MessagePrinter message = new MessagePrinter(printStream);
 
 
     message.setMessage(bookList.toString());
     message.display();
-    verify(printStream).println("The Hobbit\nGoT\n");
+    verify(printStream).println("The Hobbit, by JRR Tolkien (1975)\nGame Of Thrones, by George RR Martin (2001)\n");
   }
 }
+
