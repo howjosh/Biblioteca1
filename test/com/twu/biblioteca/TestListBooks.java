@@ -4,6 +4,8 @@ import org.junit.Test;
 
 import java.io.PrintStream;
 import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.is;
 
 /**
  * Created by richiethomas on 6/17/14.
@@ -19,7 +21,9 @@ public class TestListBooks {
 
     message.setMessage(bookList.toString());
     message.display();
-    verify(printStream).println("The Hobbit, by JRR Tolkien (1975)\nGame Of Thrones, by George RR Martin (2001)\n");
+    verify(printStream).println("Harry Potter And The Prisoner of Azkaban|  JK Rowling                              |  1999\n" +
+            "The Shining                             |  Steven King                             |  1980\n");
   }
+
 }
 
