@@ -14,6 +14,6 @@ public class TestBooks {
   public void testBookAttributes() {
     Book got = new Book("Game of Thrones", "George RR Martin", 2001);
     assertThat(got.getTitle(), is("Game of Thrones"));
-    
+    assertThat(got.getAuthor(), is("George RR Martin"));
   }
 }
