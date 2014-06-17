@@ -2,16 +2,20 @@ package com.twu.biblioteca;
 
 public class BibliotecaApp {
 
+
+
   public static void main(String[] args) {
-    System.out.println("Hello, world!");
+
+    BiblioMessage message = new BiblioMessage(System.out);
+    String[] listOfBooks = {"The Hobbit", "GoT"};
+
+
+    message.setMessage("Welcome to the library!");
+    message.display();
+
+    BookList bookList = new BookList();
+    message.setMessage(bookList.toString());
+    message.display();
   }
 
-  public String welcome() {
-    return "Welcome to the library.";
-  }
-
-  public String[] getAllBooks(){
-    String[] allBooks = {"The Hobbit","Game of Thrones"};
-    return allBooks;
-  }
 }

@@ -2,7 +2,8 @@ package com.twu.biblioteca;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import java.io.PrintStream;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by richiethomas on 6/17/14.
@@ -11,12 +12,13 @@ public class TestListBooks {
 
   @Test
   public void testListBooks(){
-    BibliotecaApp bibby = new BibliotecaApp();
-    String[] allBooks = bibby.getAllBooks();
-    String[] testBookList = new String[2];
-    testBookList[0] = "The Hobbit";
-    testBookList[1] = "Game of Thrones";
+    BookList bookList = new BookList();
+    PrintStream printStream = mock(PrintStream.class);
+    BiblioMessage message = new BiblioMessage(printStream);
 
-    assertEquals(allBooks,testBookList);
+
+    message.setMessage(bookList.toString());
+    message.display();
+    verify(printStream).println("The Hobbit\nGoT\n");
   }
 }

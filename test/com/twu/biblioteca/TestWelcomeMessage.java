@@ -17,7 +17,8 @@ public class TestWelcomeMessage {
   @Test
   public void testWelcomeMessage() {
     PrintStream printStream = mock(PrintStream.class);
-    WelcomeMessage message = new WelcomeMessage(printStream);
+    BiblioMessage message = new BiblioMessage(printStream);
+    message.setMessage("Welcome!");
     message.display();
     verify(printStream).println("Welcome!");
   }
