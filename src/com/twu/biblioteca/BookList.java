@@ -18,6 +18,7 @@ public class BookList {
   }
 
   private String outputOneLine(String str) {
+
     int lengthOfString;
     if(str.length() >= 40) {
       lengthOfString = 40;
