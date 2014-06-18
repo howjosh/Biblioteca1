@@ -2,21 +2,30 @@ package com.twu.biblioteca;
 
 public class BibliotecaApp {
 
-
-
-  public static void main(String[] args) {
-
-    MessagePrinter message = new MessagePrinter(System.out);
+    MessagePrinter message;
     String[] listOfBooks = {"The Hobbit", "GoT"};
+    CommandMenu commandMenu;
 
+    public BibliotecaApp(MessagePrinter messagePrinter, CommandMenu commandMenu) {
+        this.message = messagePrinter;
+        this.commandMenu = commandMenu;
+    }
 
-    message.setMessage("Welcome to the library!");
-    message.display();
+    public static void main(String[] args) {
 
-    BookList bookList = new BookList();
-    message.setMessage(bookList.toString());
-    message.display();
+      BibliotecaApp app = new BibliotecaApp(new MessagePrinter(System.out),new CommandMenu(System.out));
+      app.start();
 
   }
+
+    public void start() {
+
+
+        message.setMessage("Welcome to the library!");
+        message.display();
+        commandMenu.listOptions();
+
+
+    }
 
 }
