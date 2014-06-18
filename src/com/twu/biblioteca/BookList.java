@@ -6,7 +6,13 @@ package com.twu.biblioteca;
 public class BookList {
   Book[] bookList = {new Book("Harry Potter And The Prisoner of Azkaban", "JK Rowling", 1999), new Book("The Shining", "Steven King", 1980)};
 
-  @Override
+    BookListPrinter printer;
+
+    public BookList(BookListPrinter printer) {
+        this.printer = printer;
+    }
+
+    @Override
   public String toString(){
     String temp = "";
     for(Book book : bookList){
@@ -27,4 +33,9 @@ public class BookList {
     }
     return String.format("%-40s", str.substring(0, lengthOfString));
   }
+
+    public void display() {
+        printer.setMessage(this.toString());
+        printer.display();
+    }
 }
