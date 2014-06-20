@@ -55,7 +55,8 @@ public class TestCommandMenu {
         commands.put("zzzz", command);
         when(reader.readLine()).thenReturn("zzzz");
 
-        commandMenu.selectAndExecuteOption();
+        String userCommand = commandMenu.promptUser();
+        commandMenu.executeCommand(userCommand);
         verify(command).execute();
     }
 
@@ -67,7 +68,8 @@ public class TestCommandMenu {
         commands.put("list",command);
         when(reader.readLine()).thenReturn("list");
 
-        commandMenu.selectAndExecuteOption();
+        String userCommand = commandMenu.promptUser();
+        commandMenu.executeCommand(userCommand);
         verify(printStream).println("Harry Potter And The Prisoner of Azkaban|  JK Rowling                              |  1999\n" +
                 "The Shining                             |  Steven King                             |  1980\n");
     }
@@ -80,7 +82,8 @@ public class TestCommandMenu {
         commands.put("zzzz", command);
         when(reader.readLine()).thenReturn("Invalid option");
 
-        commandMenu.selectAndExecuteOption();
+        String userCommand = commandMenu.promptUser();
+        commandMenu.executeCommand(userCommand);
         verify(printStream).println("Select a valid option");
     }
 
@@ -92,7 +95,10 @@ public class TestCommandMenu {
         commands.put("zzzz", command);
         when(reader.readLine()).thenReturn("Invalid option");
 
-        boolean validOption = commandMenu.selectAndExecuteOption();
+        String userCommand = commandMenu.promptUser();
+        boolean validOption = commandMenu.executeCommand(userCommand);
         assertThat(validOption, is(false));
     }
+    
+    
 }

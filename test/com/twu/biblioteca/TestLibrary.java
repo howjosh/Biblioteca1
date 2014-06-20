@@ -16,11 +16,13 @@ public class TestLibrary {
     @Test
     public void testLibraryStartCallsWelcomeAndMenu() throws IOException {
         CommandMenu commandMenu = mock(CommandMenu.class);
-        when(commandMenu.selectAndExecuteOption()).thenReturn(true);
+        when(commandMenu.promptUser()).thenReturn("list");
+        when(commandMenu.executeCommand("list")).thenReturn(true);
         BibliotechaApp bibliotechaApp = new BibliotechaApp(commandMenu);
         bibliotechaApp.start();
         verify(commandMenu).displayWelcome();
         verify(commandMenu).listOptions();
-        verify(commandMenu).selectAndExecuteOption();
+        verify(commandMenu).promptUser();
+        verify(commandMenu).executeCommand("list");
     }
 }

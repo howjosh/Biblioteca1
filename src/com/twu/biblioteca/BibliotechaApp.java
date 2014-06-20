@@ -18,9 +18,11 @@ public class BibliotechaApp {
         commandMenu.displayWelcome();
         commandMenu.listOptions();
 
-        boolean isValidCommand = commandMenu.selectAndExecuteOption();
+        String userCommand = commandMenu.promptUser();
+        boolean isValidCommand = commandMenu.executeCommand(userCommand);
         while(!isValidCommand){
-            isValidCommand = commandMenu.selectAndExecuteOption();
+            userCommand = commandMenu.promptUser();
+            isValidCommand = commandMenu.executeCommand(userCommand);
         }
     }
 }
