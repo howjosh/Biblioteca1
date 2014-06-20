@@ -34,8 +34,7 @@ public class CommandMenu {
 
 
         if(commands.containsKey(command)){
-            commands.get(command).execute();
-            return true;
+            return commands.get(command).execute();
         } else {
             printStream.println("Select a valid option");
             return false;

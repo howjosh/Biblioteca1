@@ -14,6 +14,7 @@ public class Main {
         HashMap<String,Command> commands = new HashMap<String, Command>();
         Command listBooksCommand = new ListBooksCommand(library);
         commands.put("list", listBooksCommand);
+        commands.put("quit", new QuitCommand(System.out));
 
         CommandMenu menu = new CommandMenu(System.out, new BufferedReader(new InputStreamReader(System.in)),
                 commands);

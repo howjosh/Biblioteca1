@@ -11,7 +11,8 @@ public class ListBooksCommand implements Command {
     }
 
     @Override
-    public void execute() {
+    public boolean execute() {
         library.display();
+        return false;
     }
 }

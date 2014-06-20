@@ -19,10 +19,10 @@ public class BibliotechaApp {
         commandMenu.listOptions();
 
         String userCommand = commandMenu.promptUser();
-        boolean isValidCommand = commandMenu.executeCommand(userCommand);
-        while(!isValidCommand){
+        boolean isQuit = commandMenu.executeCommand(userCommand);
+        while(!isQuit){
             userCommand = commandMenu.promptUser();
-            isValidCommand = commandMenu.executeCommand(userCommand);
+            isQuit = commandMenu.executeCommand(userCommand);
         }
     }
 }

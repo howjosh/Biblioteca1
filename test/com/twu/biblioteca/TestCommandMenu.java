@@ -99,6 +99,13 @@ public class TestCommandMenu {
         boolean validOption = commandMenu.executeCommand(userCommand);
         assertThat(validOption, is(false));
     }
+
+    @Test
+    public void shouldReturnTrueOnQuit() {
+        Command quitCommand = new QuitCommand(printStream);
+        boolean isQuit = quitCommand.execute();
+        assertThat(isQuit, is(true));
+    }
     
     
 }
