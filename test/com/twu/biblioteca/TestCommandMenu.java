@@ -122,13 +122,11 @@ public class TestCommandMenu {
     }
 
     @Test
-    public void shouldNotDisplayCheckedOutBooks() {
-        Library library = new Library(printStream, reader, bookList);
-        Book book = bookList.get("Harry Potter");
-        book.checkOut();
-        library.display();
-        verify(printStream).println("The Shining                             |  Stephen King                            |  1970\n");
+    public void shouldReturnBookCommandAlterBookList() throws IOException {
+        Library library = mock(Library.class);
+        Command returnBookCommand = new ReturnBookCommand(library);
+        returnBookCommand.execute();
+        verify(library).returnBook();
     }
-
     
 }

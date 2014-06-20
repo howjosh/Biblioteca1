@@ -49,17 +49,30 @@ public class Library {
     }
 
     public void checkOutBook() throws IOException {
-        printStream.println("What is the title of the book? ");
-        String bookString = reader.readLine();
-
-        if(bookList.containsKey(bookString)){
-            Book book = bookList.get(bookString);
+        Book book = findBook();
+        if (book != null) {
             book.checkOut();
             printStream.println("Thank you! Enjoy the book");
-        }
-        else{
+        } else{
             printStream.println("That book is not available.");
         }
 
+    }
+
+    public void returnBook() throws IOException {
+        Book book = findBook();
+        if (book != null) {
+            book.returnBook();
+        }
+    }
+
+    private Book findBook() throws IOException {
+        printStream.println("What is the title of the book?");
+        String bookString = reader.readLine();
+
+        if(bookList.containsKey(bookString))
+            return bookList.get(bookString);
+        else
+            return null;
     }
 }

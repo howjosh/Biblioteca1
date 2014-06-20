@@ -50,11 +50,34 @@ public class TestLibrary {
     }
 
     @Test
+    public void shouldAddBookToBookListOnReturn() throws IOException {
+        PrintStream printStream = mock(PrintStream.class);
+        BufferedReader reader = mock(BufferedReader.class);
+        Map<String,Book> bookList = new HashMap<String,Book>();
+        Book book = new Book("Harry Potter", "JK Rowling", 1995, true);
+        bookList.put("Harry Potter", book);
+        Library library = new Library(printStream,reader,bookList);
+        when(reader.readLine()).thenReturn("Harry Potter");
+        library.returnBook();
+
+        assertThat(book.isCheckedOut(), is(false));
+    }
+
+    @Test
+    public void shouldNotDisplayCheckedOutBooks() {
+        Library library = new Library(printStream, reader, bookList);
+        Book book = bookList.get("Harry Potter");
+        book.checkOut();
+        library.display();
+        verify(printStream).println("The Shining                             |  Stephen King                            |  1970\n");
+    }
+
+    @Test
     public void shouldDisplayErrorForUnavailableBooks() throws IOException {
         Library library = new Library(printStream, reader, bookList);
         when(reader.readLine()).thenReturn("asldkfjaslkdj");
         library.checkOutBook();
-        verify(printStream).println("What is the title of the book? ");
+        verify(printStream).println("What is the title of the book?");
         verify(printStream).println("That book is not available.");
     }
 
@@ -64,7 +87,7 @@ public class TestLibrary {
         Library library = new Library(printStream, reader, bookList);
         when(reader.readLine()).thenReturn("Harry Potter");
         library.checkOutBook();
-        verify(printStream).println("What is the title of the book? ");
+        verify(printStream).println("What is the title of the book?");
         verify(printStream).println("Thank you! Enjoy the book");
     }
 
