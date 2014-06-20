@@ -7,11 +7,9 @@ import java.util.HashMap;
 
 public class BibliotecaApp {
 
-    Printer message;
     CommandMenu commandMenu;
 
-    public BibliotecaApp(Printer messagePrinter, CommandMenu commandMenu) {
-        this.message = messagePrinter;
+    public BibliotecaApp(CommandMenu commandMenu) {
         this.commandMenu = commandMenu;
     }
 
@@ -23,15 +21,16 @@ public class BibliotecaApp {
         Command listBooksCommand = new ListBooksCommand(bookList);
         commands.put("list", listBooksCommand);
 
-        BibliotecaApp app = new BibliotecaApp(new WelcomeMessagePrinter(System.out),
-                                              new CommandMenu(System.out, new BufferedReader(new InputStreamReader(System.in)),
-                                              commands));
+        CommandMenu menu = new CommandMenu(System.out, new BufferedReader(new InputStreamReader(System.in)),
+                commands);
+
+        BibliotecaApp app = new BibliotecaApp(menu);
         app.start();
 
   }
 
     public void start() throws IOException {
-        message.display();
+        commandMenu.displayWelcome();
         commandMenu.listOptions();
         commandMenu.selectAndExecuteOption();
     }

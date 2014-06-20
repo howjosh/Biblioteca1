@@ -14,11 +14,10 @@ public class TestBibliotechaApp {
 
     @Test
     public void testStartCallsWelcomeAndMenu() throws IOException {
-        Printer messagePrinter = mock(WelcomeMessagePrinter.class);
         CommandMenu commandMenu = mock(CommandMenu.class);
-        BibliotecaApp bibliotecaApp = new BibliotecaApp(messagePrinter,commandMenu);
+        BibliotecaApp bibliotecaApp = new BibliotecaApp(commandMenu);
         bibliotecaApp.start();
-        verify(messagePrinter).display();
+        verify(commandMenu).displayWelcome();
         verify(commandMenu).listOptions();
 
 

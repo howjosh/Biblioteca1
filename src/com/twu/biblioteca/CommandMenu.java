@@ -30,4 +30,8 @@ public class CommandMenu {
         String input = reader.readLine();
         commands.get(input).execute();
     }
+
+    public void displayWelcome() {
+        printStream.println("Welcome to the library!");
+    }
 }

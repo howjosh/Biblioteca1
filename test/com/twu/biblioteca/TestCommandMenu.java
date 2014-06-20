@@ -30,6 +30,13 @@ public class TestCommandMenu {
     }
 
     @Test
+    public void testWelcomeMessage() {
+        commandMenu = new CommandMenu(printStream, reader,mock(HashMap.class));
+        commandMenu.displayWelcome();
+        verify(printStream).println("Welcome to the library!");
+    }
+
+    @Test
     public void shouldListAllMenuOptions() {
         HashMap<String, Command> commands = new HashMap<String, Command>();
         Command command = mock(Command.class);
