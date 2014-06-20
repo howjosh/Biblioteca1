@@ -18,7 +18,9 @@ public class Library {
         commandMenu.displayWelcome();
         commandMenu.listOptions();
 
-
-        commandMenu.selectAndExecuteOption();
+        boolean isValidCommand = commandMenu.selectAndExecuteOption();
+        while(!isValidCommand){
+            isValidCommand = commandMenu.selectAndExecuteOption();
+        }
     }
 }
