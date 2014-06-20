@@ -42,12 +42,4 @@ public class CommandMenu {
     public void displayWelcome() {
         printStream.println("Welcome to the library!");
     }
-
-    public void start() throws IOException {
-        displayWelcome();
-        listOptions();
-
-
-        selectAndExecuteOption();
-    }
 }
