@@ -1,27 +1,34 @@
 package com.twu.biblioteca;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.PrintStream;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by richiethomas on 6/17/14.
  */
 public class Library {
-  Book[] bookList = {new Book("Harry Potter And The Prisoner of Azkaban", "JK Rowling", 1999), new Book("The Shining", "Steven King", 1980)};
+    Map<String,Book> bookList;
 
     private PrintStream printStream;
+    private BufferedReader reader;
 
-    public Library(PrintStream printStream) {
-
+    public Library(PrintStream printStream, BufferedReader reader, Map<String, Book> bookList) {
+        this.bookList = bookList;
         this.printStream = printStream;
+        this.reader = reader;
     }
 
     @Override
   public String toString(){
     String temp = "";
-    for(Book book : bookList){
-      temp += outputOneLine(book.getTitle()) + "|  ";
-      temp += outputOneLine(book.getAuthor()) + "|  ";
-      temp += Integer.toString(book.getYear()) + "\n";
+    for(Book book : bookList.values()){
+        if(book.isCheckedOut()) continue;
+        temp += outputOneLine(book.getTitle()) + "|  ";
+        temp += outputOneLine(book.getAuthor()) + "|  ";
+        temp += Integer.toString(book.getYear()) + "\n";
     }
     return temp;
   }
@@ -39,5 +46,19 @@ public class Library {
 
     public void display() {
         printStream.println(this.toString());
+    }
+
+    public void checkOutBook() throws IOException {
+        printStream.println("What is the title of the book? ");
+        String bookString = reader.readLine();
+
+        if(bookList.containsKey(bookString)){
+            Book book = bookList.get(bookString);
+            book.checkOut();
+        }
+        else{
+            printStream.println("Book not found.");
+        }
+
     }
 }

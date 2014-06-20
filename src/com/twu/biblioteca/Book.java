@@ -8,11 +8,13 @@ public class Book {
   private String title;
   private String author;
   private int year;
+  private boolean checkedOut;
 
-  public Book(String title, String author, int year) {
+  public Book(String title, String author, int year, boolean checkedOut) {
     this.title = title;
     this.author = author;
     this.year = year;
+    this.checkedOut = checkedOut;
   }
 
   public String getTitle() {
@@ -25,5 +27,13 @@ public class Book {
 
   public int getYear() {
     return year;
+  }
+
+  public boolean isCheckedOut(){
+      return checkedOut;
+  }
+
+  public void checkOut(){
+      checkedOut = true;
   }
 }

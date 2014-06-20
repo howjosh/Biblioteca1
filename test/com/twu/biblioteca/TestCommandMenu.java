@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.HashMap;
+import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -22,11 +23,16 @@ public class TestCommandMenu {
     private PrintStream printStream;
     private BufferedReader reader;
     private CommandMenu commandMenu;
+    Map<String,Book> bookList;
+
 
     @Before
     public void setUp() {
         printStream = mock(PrintStream.class);
         reader = mock(BufferedReader.class);
+        bookList = new HashMap<String,Book>();
+        bookList.put("Harry Potter", new Book("Harry Potter", "JK Rowling", 1995, false));
+        bookList.put("The Shining", new Book("The Shining", "Stephen King", 1970, false));
     }
 
     @Test
@@ -64,14 +70,14 @@ public class TestCommandMenu {
     public void shouldDisplayBookList() throws IOException {
         HashMap<String, Command> commands = new HashMap<String, Command>();
         commandMenu = new CommandMenu(mock(PrintStream.class), reader, commands);
-        Command command = new ListBooksCommand(new Library(printStream));
+        Command command = new ListBooksCommand(new Library(printStream, reader, bookList));
         commands.put("list",command);
         when(reader.readLine()).thenReturn("list");
 
         String userCommand = commandMenu.promptUser();
         commandMenu.executeCommand(userCommand);
-        verify(printStream).println("Harry Potter And The Prisoner of Azkaban|  JK Rowling                              |  1999\n" +
-                "The Shining                             |  Steven King                             |  1980\n");
+        verify(printStream).println("The Shining                             |  Stephen King                            |  1970\n" +
+                "Harry Potter                            |  JK Rowling                              |  1995\n");
     }
 
     @Test
@@ -105,6 +111,23 @@ public class TestCommandMenu {
         Command quitCommand = new QuitCommand(printStream);
         boolean isQuit = quitCommand.execute();
         assertThat(isQuit, is(true));
+    }
+
+    @Test
+    public void shouldCheckoutBookCommandAlterBookList() throws IOException {
+        Library library = mock(Library.class);
+        Command checkoutBookCommand = new CheckoutBookCommand(library);
+        checkoutBookCommand.execute();
+        verify(library).checkOutBook();
+    }
+
+    @Test
+    public void shouldNotDisplayCheckedOutBooks() {
+        Library library = new Library(printStream, reader, bookList);
+        Book book = bookList.get("Harry Potter");
+        book.checkOut();
+        library.display();
+        verify(printStream).println("The Shining                             |  Stephen King                            |  1970\n");
     }
     
     
