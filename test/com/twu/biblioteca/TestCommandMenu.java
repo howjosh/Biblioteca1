@@ -71,4 +71,16 @@ public class TestCommandMenu {
         verify(printStream).println("Harry Potter And The Prisoner of Azkaban|  JK Rowling                              |  1999\n" +
                 "The Shining                             |  Steven King                             |  1980\n");
     }
+
+    @Test
+    public void shouldDisplayInvalidOptionMessage() throws IOException {
+        HashMap<String, Command> commands = new HashMap<String, Command>();
+        commandMenu = new CommandMenu(printStream, reader, commands);
+        Command command = mock(Command.class);
+        commands.put("zzzz", command);
+        when(reader.readLine()).thenReturn("Invalid option");
+
+        commandMenu.selectAndExecuteOption();
+        verify(printStream).println("Select a valid option");
+    }
 }

@@ -28,7 +28,13 @@ public class CommandMenu {
 
     public void selectAndExecuteOption() throws IOException {
         String input = reader.readLine();
-        commands.get(input).execute();
+
+        if(commands.containsKey(input)){
+            commands.get(input).execute();
+        } else {
+            printStream.println("Select a valid option");
+        }
+
     }
 
     public void displayWelcome() {
