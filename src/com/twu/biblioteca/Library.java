@@ -1,26 +1,43 @@
 package com.twu.biblioteca;
 
-import java.io.IOException;
+import java.io.PrintStream;
 
 /**
- * Created by derekgilwa on 6/20/14.
+ * Created by richiethomas on 6/17/14.
  */
 public class Library {
+  Book[] bookList = {new Book("Harry Potter And The Prisoner of Azkaban", "JK Rowling", 1999), new Book("The Shining", "Steven King", 1980)};
 
-    private CommandMenu commandMenu;
+    private PrintStream printStream;
 
-    public Library(CommandMenu commandMenu){
+    public Library(PrintStream printStream) {
 
-        this.commandMenu = commandMenu;
+        this.printStream = printStream;
     }
 
-    public void start() throws IOException {
-        commandMenu.displayWelcome();
-        commandMenu.listOptions();
+    @Override
+  public String toString(){
+    String temp = "";
+    for(Book book : bookList){
+      temp += outputOneLine(book.getTitle()) + "|  ";
+      temp += outputOneLine(book.getAuthor()) + "|  ";
+      temp += Integer.toString(book.getYear()) + "\n";
+    }
+    return temp;
+  }
 
-        boolean isValidCommand = commandMenu.selectAndExecuteOption();
-        while(!isValidCommand){
-            isValidCommand = commandMenu.selectAndExecuteOption();
-        }
+  private String outputOneLine(String str) {
+
+    int lengthOfString;
+    if(str.length() >= 40) {
+      lengthOfString = 40;
+    } else {
+      lengthOfString = str.length();
+    }
+    return String.format("%-40s", str.substring(0, lengthOfString));
+  }
+
+    public void display() {
+        printStream.println(this.toString());
     }
 }

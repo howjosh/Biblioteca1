@@ -2,10 +2,7 @@ package com.twu.biblioteca;
 
 import org.junit.Test;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.PrintStream;
-import java.util.HashMap;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -20,8 +17,8 @@ public class TestLibrary {
     public void testLibraryStartCallsWelcomeAndMenu() throws IOException {
         CommandMenu commandMenu = mock(CommandMenu.class);
         when(commandMenu.selectAndExecuteOption()).thenReturn(true);
-        Library library= new Library(commandMenu);
-        library.start();
+        BibliotechaApp bibliotechaApp = new BibliotechaApp(commandMenu);
+        bibliotechaApp.start();
         verify(commandMenu).displayWelcome();
         verify(commandMenu).listOptions();
         verify(commandMenu).selectAndExecuteOption();

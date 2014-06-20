@@ -63,7 +63,7 @@ public class TestCommandMenu {
     public void shouldDisplayBookList() throws IOException {
         HashMap<String, Command> commands = new HashMap<String, Command>();
         commandMenu = new CommandMenu(mock(PrintStream.class), reader, commands);
-        Command command = new ListBooksCommand(new BookList(printStream));
+        Command command = new ListBooksCommand(new Library(printStream));
         commands.put("list",command);
         when(reader.readLine()).thenReturn("list");
 

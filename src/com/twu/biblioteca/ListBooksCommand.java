@@ -4,14 +4,14 @@ package com.twu.biblioteca;
  * Created by derekgilwa on 6/18/14.
  */
 public class ListBooksCommand implements Command {
-    private BookList bookList;
+    private Library library;
 
-    public ListBooksCommand(BookList bookList) {
-        this.bookList = bookList;
+    public ListBooksCommand(Library library) {
+        this.library = library;
     }
 
     @Override
     public void execute() {
-        bookList.display();
+        library.display();
     }
 }
