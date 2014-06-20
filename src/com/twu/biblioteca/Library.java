@@ -55,9 +55,10 @@ public class Library {
         if(bookList.containsKey(bookString)){
             Book book = bookList.get(bookString);
             book.checkOut();
+            printStream.println("Thank you! Enjoy the book");
         }
         else{
-            printStream.println("Book not found.");
+            printStream.println("That book is not available.");
         }
 
     }

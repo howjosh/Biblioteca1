@@ -129,6 +129,6 @@ public class TestCommandMenu {
         library.display();
         verify(printStream).println("The Shining                             |  Stephen King                            |  1970\n");
     }
-    
+
     
 }
