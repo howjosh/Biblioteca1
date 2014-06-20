@@ -32,6 +32,8 @@ public class BibliotecaApp {
     public void start() throws IOException {
         commandMenu.displayWelcome();
         commandMenu.listOptions();
+
+
         commandMenu.selectAndExecuteOption();
     }
 

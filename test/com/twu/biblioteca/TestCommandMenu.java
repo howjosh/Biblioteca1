@@ -83,4 +83,16 @@ public class TestCommandMenu {
         commandMenu.selectAndExecuteOption();
         verify(printStream).println("Select a valid option");
     }
+
+    @Test
+    public void shouldInvalidOptionReturnFalse() throws IOException {
+        HashMap<String, Command> commands = new HashMap<String, Command>();
+        commandMenu = new CommandMenu(printStream, reader, commands);
+        Command command = mock(Command.class);
+        commands.put("zzzz", command);
+        when(reader.readLine()).thenReturn("Invalid option");
+
+        boolean validOption = commandMenu.selectAndExecuteOption();
+        assertThat(validOption, is(false));
+    }
 }

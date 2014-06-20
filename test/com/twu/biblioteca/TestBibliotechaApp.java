@@ -19,7 +19,7 @@ public class TestBibliotechaApp {
         bibliotecaApp.start();
         verify(commandMenu).displayWelcome();
         verify(commandMenu).listOptions();
-
+        verify(commandMenu).selectAndExecuteOption();
 
     }
 }
