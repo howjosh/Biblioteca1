@@ -24,17 +24,11 @@ public class BibliotecaApp {
         CommandMenu menu = new CommandMenu(System.out, new BufferedReader(new InputStreamReader(System.in)),
                 commands);
 
-        BibliotecaApp app = new BibliotecaApp(menu);
-        app.start();
+        Library library = new Library(menu);
+        library.start();
 
   }
 
-    public void start() throws IOException {
-        commandMenu.displayWelcome();
-        commandMenu.listOptions();
 
-
-        commandMenu.selectAndExecuteOption();
-    }
 
 }
