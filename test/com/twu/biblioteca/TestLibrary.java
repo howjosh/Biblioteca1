@@ -81,6 +81,18 @@ public class TestLibrary {
         verify(printStream).println("That book is not available.");
     }
 
+    @Test
+    public void shouldDisplayErrorForCheckedOutBooks() throws IOException {
+        Library library = new Library(printStream, reader, bookList);
+        when(reader.readLine()).thenReturn("Harry Potter");
+        Book book = bookList.get("Harry Potter");
+        book.checkOut();
+
+
+        library.checkOutBook();
+        verify(printStream).println("What is the title of the book?");
+        verify(printStream).println("That book is not available.");
+    }
 
     @Test
     public void shouldDisplayCheckedOutBookMessageOnCheckout() throws IOException {
@@ -90,5 +102,36 @@ public class TestLibrary {
         verify(printStream).println("What is the title of the book?");
         verify(printStream).println("Thank you! Enjoy the book");
     }
+
+    @Test
+    public void shouldDisplayReturnedBookMessageOnReturn() throws IOException {
+        Library library = new Library(printStream, reader, bookList);
+        when(reader.readLine()).thenReturn("Harry Potter");
+        Book book = bookList.get("Harry Potter");
+        book.checkOut();
+
+        library.returnBook();
+        verify(printStream).println("What is the title of the book?");
+        verify(printStream).println("Thank you for returning the book");
+    }
+
+    @Test
+     public void shouldDisplayErrorForBooksThatAreUnavailableToReturn() throws IOException {
+        Library library = new Library(printStream, reader, bookList);
+        when(reader.readLine()).thenReturn("asldkfjaslkdj");
+        library.returnBook();
+        verify(printStream).println("What is the title of the book?");
+        verify(printStream).println("That is not a valid book to return.");
+    }
+
+    @Test
+    public void shouldDisplayErrorForBooksThatAreAlreadyReturned() throws IOException {
+        Library library = new Library(printStream, reader, bookList);
+        when(reader.readLine()).thenReturn("Harry Potter");
+        library.returnBook();
+        verify(printStream).println("What is the title of the book?");
+        verify(printStream).println("That is not a valid book to return.");
+    }
+
 
 }
