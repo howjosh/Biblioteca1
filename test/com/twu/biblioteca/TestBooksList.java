@@ -16,8 +16,7 @@ public class TestBooksList {
     public void testListBooks(){
 
         PrintStream printStream = mock(PrintStream.class);
-        BookListPrinter printer = new BookListPrinter(printStream);
-        BookList bookList = new BookList(printer);
+        BookList bookList = new BookList(printStream);
 
         bookList.display();
         verify(printStream).println("Harry Potter And The Prisoner of Azkaban|  JK Rowling                              |  1999\n" +

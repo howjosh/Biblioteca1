@@ -51,4 +51,17 @@ public class TestCommandMenu {
         commandMenu.selectAndExecuteOption();
         verify(command).execute();
     }
+
+    @Test
+    public void shouldDisplayBookList() throws IOException {
+        HashMap<String, Command> commands = new HashMap<String, Command>();
+        commandMenu = new CommandMenu(mock(PrintStream.class), reader, commands);
+        Command command = new ListBooksCommand(new BookList(printStream));
+        commands.put("list",command);
+        when(reader.readLine()).thenReturn("list");
+
+        commandMenu.selectAndExecuteOption();
+        verify(printStream).println("Harry Potter And The Prisoner of Azkaban|  JK Rowling                              |  1999\n" +
+                "The Shining                             |  Steven King                             |  1980\n");
+    }
 }

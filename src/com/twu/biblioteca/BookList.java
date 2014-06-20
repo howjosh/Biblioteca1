@@ -1,15 +1,18 @@
 package com.twu.biblioteca;
 
+import java.io.PrintStream;
+
 /**
  * Created by richiethomas on 6/17/14.
  */
 public class BookList {
   Book[] bookList = {new Book("Harry Potter And The Prisoner of Azkaban", "JK Rowling", 1999), new Book("The Shining", "Steven King", 1980)};
 
-    BookListPrinter printer;
+    private PrintStream printStream;
 
-    public BookList(BookListPrinter printer) {
-        this.printer = printer;
+    public BookList(PrintStream printStream) {
+
+        this.printStream = printStream;
     }
 
     @Override
@@ -35,7 +38,6 @@ public class BookList {
   }
 
     public void display() {
-        printer.setMessage(this.toString());
-        printer.display();
+        printStream.println(this.toString());
     }
 }

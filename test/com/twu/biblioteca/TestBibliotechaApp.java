@@ -2,6 +2,8 @@ package com.twu.biblioteca;
 
 import org.junit.Test;
 
+import java.io.IOException;
+
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -11,7 +13,7 @@ import static org.mockito.Mockito.verify;
 public class TestBibliotechaApp {
 
     @Test
-    public void testStartCallsWelcomeAndMenu(){
+    public void testStartCallsWelcomeAndMenu() throws IOException {
         Printer messagePrinter = mock(WelcomeMessagePrinter.class);
         CommandMenu commandMenu = mock(CommandMenu.class);
         BibliotecaApp bibliotecaApp = new BibliotecaApp(messagePrinter,commandMenu);
