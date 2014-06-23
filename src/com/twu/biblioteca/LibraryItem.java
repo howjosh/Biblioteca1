@@ -16,6 +16,8 @@ public abstract class LibraryItem {
         checkedOut = true;
     }
 
+
+
     public void returnItem() {
         checkedOut = false;
     }

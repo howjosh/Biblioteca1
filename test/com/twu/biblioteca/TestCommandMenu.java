@@ -76,8 +76,15 @@ public class TestCommandMenu {
 
         String userCommand = commandMenu.promptUser();
         commandMenu.executeCommand(userCommand);
-        verify(printStream).println("The Shining                             |  Stephen King                            |  1970\n" +
-                "Harry Potter                            |  JK Rowling                              |  1995\n");
+
+        int maxTitleLength = "Harry Potter".length() + 4;
+        int maxAuthorLength = "Stephen King".length() + 4;
+
+
+        String format = "%-" + maxTitleLength + "s" + "%-" + maxAuthorLength + "s" + "%s\n";
+        verify(printStream).printf(format, "Harry Potter", "JK Rowling", 1995);
+
+
     }
 
     @Test
@@ -118,7 +125,7 @@ public class TestCommandMenu {
         Library library = mock(Library.class);
         Command checkoutBookCommand = new CheckoutBookCommand(library);
         checkoutBookCommand.execute();
-        verify(library).checkOutBook();
+        verify(library).checkoutItem();
     }
 
     @Test
@@ -126,7 +133,7 @@ public class TestCommandMenu {
         Library library = mock(Library.class);
         Command returnBookCommand = new ReturnBookCommand(library);
         returnBookCommand.execute();
-        verify(library).returnBook();
+        verify(library).returnItem();
     }
     
 }

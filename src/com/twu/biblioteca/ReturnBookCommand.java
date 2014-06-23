@@ -15,7 +15,7 @@ public class ReturnBookCommand implements Command {
     @Override
     public boolean execute() {
         try {
-            library.returnBook();
+            library.returnItem();
         } catch (IOException e) {
             e.printStackTrace();
         }

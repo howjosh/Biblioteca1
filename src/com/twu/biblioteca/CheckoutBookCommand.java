@@ -15,7 +15,7 @@ public class CheckoutBookCommand implements Command {
     @Override
     public boolean execute() {
         try {
-            library.checkOutBook();
+            library.checkoutItem();
         } catch (IOException e) {
             e.printStackTrace();
         }

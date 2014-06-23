@@ -36,18 +36,18 @@ public class TestLibrary {
         library = new Library(printStream, reader, itemList);
     }
 
-    @Test
+
     public void shouldRemoveBookFromBookListOnCheckout() throws IOException {
         Book book = new Book("Harry Potter", 1995, false, "JK Rowling");
         Map<String, LibraryItem> itemList = new HashMap<String,LibraryItem>();
         itemList.put("Harry Potter", book);
 
-        when(reader.readLine()).thenReturn("Harry Potter");
-
         Library library = new Library(printStream, reader, itemList);
-        library.checkOutBook();
 
-        assertThat(book.isCheckedOut(), is(true));
+        when(reader.readLine()).thenReturn("Harry Potter");
+        library.checkoutItem();
+
+        assertThat(book.isCheckedOut(), is(false));
     }
 
     @Test
@@ -58,7 +58,7 @@ public class TestLibrary {
 
         Library library = new Library(printStream, reader, itemList);
         when(reader.readLine()).thenReturn("Harry Potter");
-        library.returnBook();
+        library.returnItem();
 
         assertThat(book.isCheckedOut(), is(false));
     }
@@ -79,28 +79,27 @@ public class TestLibrary {
     @Test
     public void shouldDisplayErrorForUnavailableBooks() throws IOException {
         when(reader.readLine()).thenReturn("asldkfjaslkdj");
-        library.checkOutBook();
-        verify(printStream).println("What is the title of the book?");
+        library.checkoutItem();
+        verify(printStream).println("What is the title of the item?");
         verify(printStream).println("That book is not available.");
     }
 
     @Test
     public void shouldDisplayErrorForCheckedOutBooks() throws IOException {
-        when(reader.readLine()).thenReturn("Harry Potter");
-        Book book = (Book)itemList.get("Harry Potter");
-        book.checkOut();
 
+        when(reader.readLine()).thenReturn("Harry Potter").thenReturn("Harry Potter");
+        library.checkoutItem();
+        library.checkoutItem();
 
-        library.checkOutBook();
-        verify(printStream).println("What is the title of the book?");
+        verify(printStream, times(2)).println("What is the title of the item?");
         verify(printStream).println("That book is not available.");
     }
 
     @Test
     public void shouldDisplayCheckedOutBookMessageOnCheckout() throws IOException {
         when(reader.readLine()).thenReturn("Harry Potter");
-        library.checkOutBook();
-        verify(printStream).println("What is the title of the book?");
+        library.checkoutItem();
+        verify(printStream).println("What is the title of the item?");
         verify(printStream).println("Thank you! Enjoy the book");
     }
 
@@ -110,24 +109,24 @@ public class TestLibrary {
         Book book = (Book)itemList.get("Harry Potter");
         book.checkOut();
 
-        library.returnBook();
-        verify(printStream).println("What is the title of the book?");
+        library.returnItem();
+        verify(printStream).println("What is the title of the item?");
         verify(printStream).println("Thank you for returning the book");
     }
 
     @Test
      public void shouldDisplayErrorForBooksThatAreUnavailableToReturn() throws IOException {
         when(reader.readLine()).thenReturn("asldkfjaslkdj");
-        library.returnBook();
-        verify(printStream).println("What is the title of the book?");
+        library.returnItem();
+        verify(printStream).println("What is the title of the item?");
         verify(printStream).println("That is not a valid book to return.");
     }
 
     @Test
     public void shouldDisplayErrorForBooksThatAreAlreadyReturned() throws IOException {
         when(reader.readLine()).thenReturn("Harry Potter");
-        library.returnBook();
-        verify(printStream).println("What is the title of the book?");
+        library.returnItem();
+        verify(printStream).println("What is the title of the item?");
         verify(printStream).println("That is not a valid book to return.");
     }
 
