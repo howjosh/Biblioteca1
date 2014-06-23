@@ -1,43 +1,15 @@
 package com.twu.biblioteca;
 
-/**
- * Created by richiethomas on 6/17/14.
- */
-public class Book {
+public class Book extends LibraryItem {
 
-    private String title;
-    private String author;
-    private int year;
-    private boolean checkedOut;
+    private final String author;
 
-    public Book(String title, String author, int year, boolean checkedOut) {
-        this.title = title;
+    public Book(String title, int year, boolean checkedOut, String author) {
+        super(title, year, checkedOut);
         this.author = author;
-        this.year = year;
-        this.checkedOut = checkedOut;
-    }
-
-    public String getTitle() {
-        return title;
     }
 
     public String getAuthor() {
         return author;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public boolean isCheckedOut() {
-        return checkedOut;
-    }
-
-    public void checkOut() {
-        checkedOut = true;
-    }
-
-    public void returnBook() {
-        checkedOut = false;
     }
 }

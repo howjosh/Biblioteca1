@@ -11,9 +11,7 @@ import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by derekgilwa on 6/20/14.
@@ -24,6 +22,7 @@ public class TestLibrary {
     private PrintStream printStream;
     private BufferedReader reader;
     Map<String,Book> bookList;
+    private Library library;
 
 
     @Before
@@ -31,18 +30,17 @@ public class TestLibrary {
         printStream = mock(PrintStream.class);
         reader = mock(BufferedReader.class);
         bookList = new HashMap<String,Book>();
-        bookList.put("Harry Potter", new Book("Harry Potter", "JK Rowling", 1995, false));
-        bookList.put("The Shining", new Book("The Shining", "Stephen King", 1970, false));
+        library = new Library(printStream, reader, bookList);
+        bookList.put("Harry Potter", new Book("Harry Potter", 1995, false, "JK Rowling"));
+        bookList.put("The Shining", new Book("The Shining", 1970, false, "Stephen King"));
     }
 
     @Test
     public void shouldRemoveBookFromBookListOnCheckout() throws IOException {
-        PrintStream printStream = mock(PrintStream.class);
-        BufferedReader reader = mock(BufferedReader.class);
+        Book book = new Book("Harry Potter", 1995, false, "JK Rowling");
         Map<String,Book> bookList = new HashMap<String,Book>();
-        Book book = new Book("Harry Potter", "JK Rowling", 1995, false);
         bookList.put("Harry Potter", book);
-        Library library = new Library(printStream,reader,bookList);
+
         when(reader.readLine()).thenReturn("Harry Potter");
         library.checkOutBook();
 
@@ -51,12 +49,9 @@ public class TestLibrary {
 
     @Test
     public void shouldAddBookToBookListOnReturn() throws IOException {
-        PrintStream printStream = mock(PrintStream.class);
-        BufferedReader reader = mock(BufferedReader.class);
         Map<String,Book> bookList = new HashMap<String,Book>();
-        Book book = new Book("Harry Potter", "JK Rowling", 1995, true);
+        Book book = new Book("Harry Potter", 1995, true, "JK Rowling");
         bookList.put("Harry Potter", book);
-        Library library = new Library(printStream,reader,bookList);
         when(reader.readLine()).thenReturn("Harry Potter");
         library.returnBook();
 
@@ -65,16 +60,19 @@ public class TestLibrary {
 
     @Test
     public void shouldNotDisplayCheckedOutBooks() {
-        Library library = new Library(printStream, reader, bookList);
+        int longestBook = "The Shining".length() + 4;
+        int longestAuthor = "Stephen King".length() + 4;
+
         Book book = bookList.get("Harry Potter");
         book.checkOut();
         library.display();
-        verify(printStream).println("The Shining                             |  Stephen King                            |  1970\n");
+
+        String format = "%-" + longestBook + "s" + "%-" + longestAuthor + "s" + "%s\n";
+        verify(printStream, never()).printf(format, "Harry Potter", "JK Rowling", 1995);
     }
 
     @Test
     public void shouldDisplayErrorForUnavailableBooks() throws IOException {
-        Library library = new Library(printStream, reader, bookList);
         when(reader.readLine()).thenReturn("asldkfjaslkdj");
         library.checkOutBook();
         verify(printStream).println("What is the title of the book?");
@@ -83,7 +81,6 @@ public class TestLibrary {
 
     @Test
     public void shouldDisplayErrorForCheckedOutBooks() throws IOException {
-        Library library = new Library(printStream, reader, bookList);
         when(reader.readLine()).thenReturn("Harry Potter");
         Book book = bookList.get("Harry Potter");
         book.checkOut();
@@ -96,7 +93,6 @@ public class TestLibrary {
 
     @Test
     public void shouldDisplayCheckedOutBookMessageOnCheckout() throws IOException {
-        Library library = new Library(printStream, reader, bookList);
         when(reader.readLine()).thenReturn("Harry Potter");
         library.checkOutBook();
         verify(printStream).println("What is the title of the book?");
@@ -105,7 +101,6 @@ public class TestLibrary {
 
     @Test
     public void shouldDisplayReturnedBookMessageOnReturn() throws IOException {
-        Library library = new Library(printStream, reader, bookList);
         when(reader.readLine()).thenReturn("Harry Potter");
         Book book = bookList.get("Harry Potter");
         book.checkOut();
@@ -117,7 +112,6 @@ public class TestLibrary {
 
     @Test
      public void shouldDisplayErrorForBooksThatAreUnavailableToReturn() throws IOException {
-        Library library = new Library(printStream, reader, bookList);
         when(reader.readLine()).thenReturn("asldkfjaslkdj");
         library.returnBook();
         verify(printStream).println("What is the title of the book?");
@@ -126,7 +120,6 @@ public class TestLibrary {
 
     @Test
     public void shouldDisplayErrorForBooksThatAreAlreadyReturned() throws IOException {
-        Library library = new Library(printStream, reader, bookList);
         when(reader.readLine()).thenReturn("Harry Potter");
         library.returnBook();
         verify(printStream).println("What is the title of the book?");

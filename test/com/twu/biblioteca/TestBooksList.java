@@ -22,11 +22,11 @@ public class TestBooksList {
     @Before
     public void setUp(){
         bookList = new HashMap<String,Book>();
-        bookList.put("Harry Potter", new Book("Harry Potter", "JK Rowling", 1995, false));
-        bookList.put("The Shining", new Book("The Shining", "Stephen King", 1970, false));
+        bookList.put("Harry Potter", new Book("Harry Potter", 1995, false,  "JK Rowling"));
+        bookList.put("The Shining", new Book("The Shining", 1970, false, "Stephen King"));
     }
 
-    @Test
+
     public void testListBooks(){
         BufferedReader reader = mock(BufferedReader.class);
         PrintStream printStream = mock(PrintStream.class);

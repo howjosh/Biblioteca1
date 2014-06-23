@@ -11,8 +11,8 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         Map<String,Book> bookList = new HashMap<String,Book>();
-        bookList.put("Harry Potter", new Book("Harry Potter", "JK Rowling", 1995, false));
-        bookList.put("The Shining", new Book("The Shining", "Stephen King", 1970, false));
+        bookList.put("Harry Potter", new Book("Harry Potter", 1995, false, "JK Rowling"));
+        bookList.put("The Shining", new Book("The Shining", 1970, false, "Stephen King"));
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         Library library = new Library(System.out, reader, bookList);
 
