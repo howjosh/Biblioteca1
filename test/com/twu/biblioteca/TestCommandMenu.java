@@ -6,7 +6,9 @@ import org.junit.Test;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -23,16 +25,16 @@ public class TestCommandMenu {
     private PrintStream printStream;
     private BufferedReader reader;
     private CommandMenu commandMenu;
-    Map<String, LibraryItem> itemList;
+    List<LibraryItem> itemList;
 
 
     @Before
     public void setUp() {
         printStream = mock(PrintStream.class);
         reader = mock(BufferedReader.class);
-        itemList = new HashMap<String,LibraryItem>();
-        itemList.put("Harry Potter", new Book("Harry Potter", 1995, false, "JK Rowling"));
-        itemList.put("The Shining", new Book("The Shining", 1970, false, "Stephen King"));
+        itemList = new ArrayList<LibraryItem>();
+        itemList.add(new Book("Harry Potter", 1995, false, "JK Rowling"));
+        itemList.add(new Book("The Shining", 1970, false, "Stephen King"));
     }
 
     @Test

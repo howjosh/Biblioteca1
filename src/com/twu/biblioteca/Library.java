@@ -10,25 +10,25 @@ import java.util.Map;
 
 
 public class Library {
-    Map<String, LibraryItem> checkedInList;
-    Map<String, LibraryItem> checkedoutList;
+    List<LibraryItem> checkedInList;
+    List<LibraryItem> checkedoutList;
 
     private PrintStream printStream;
     private BufferedReader reader;
 
-    public Library(PrintStream printStream, BufferedReader reader, Map<String, LibraryItem> checkedInList) {
+    public Library(PrintStream printStream, BufferedReader reader, List<LibraryItem> checkedInList) {
         this.checkedInList = checkedInList;
         this.printStream = printStream;
         this.reader = reader;
 
-        checkedoutList = new HashMap<String, LibraryItem>();
+        checkedoutList = new ArrayList<LibraryItem>();
     }
 
     public void displayBooks() {
 
         List<Book> bookList = new ArrayList<Book>();
 
-        for (LibraryItem item : checkedInList.values()) {
+        for (LibraryItem item : checkedInList) {
             if (item instanceof Book)
                 bookList.add((Book) item);
         }
@@ -70,33 +70,50 @@ public class Library {
 
         LibraryItem item = findItem();
 
-        if(item != null && checkedInList.containsKey(item.getTitle())) {
+        if (item != null && checkedInList.contains(item)) {
             item.checkOut();
-            checkedInList.remove(item.getTitle());
-            checkedoutList.put(item.getTitle(), item);
+            checkedInList.remove(item);
+            checkedoutList.add(item);
 
             printStream.println("Thank you! Enjoy the book");
-        }
-
-        else{
+        } else {
             printStream.println("That book is not available.");
         }
 
     }
 
     public void returnItem() throws IOException {
+
+
         LibraryItem item = findItem();
 
-        if (item != null && item.isCheckedOut()) {
+
+        if (item != null && checkedoutList.contains(item)) {
             item.returnItem();
             printStream.println("Thank you for returning the book");
-            checkedInList.put(item.getTitle(), item);
+            checkedInList.add(item);
         } else {
             printStream.println("That is not a valid book to return.");
         }
     }
 
+
     private LibraryItem findItem() throws IOException {
+
+        printStream.println("What is the title of the item?");
+        String itemTitle = reader.readLine();
+
+        for(LibraryItem item : checkedoutList)
+            if(item.getTitle().equals(itemTitle))
+                return item;
+
+
+        return null;
+
+    }
+
+}
+    /*private LibraryItem findItem() throws IOException {
 
         printStream.println("What is the title of the item?");
         String itemName = reader.readLine();
@@ -107,4 +124,4 @@ public class Library {
 
         else return checkedoutList.get(itemName);
     }
-}
+}*/

@@ -3,16 +3,18 @@ package com.twu.biblioteca;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        Map<String,LibraryItem> itemList = new HashMap<String,LibraryItem>();
-        itemList.put("Harry Potter", new Book("Harry Potter", 1995, false, "JK Rowling"));
-        itemList.put("The Shining", new Book("The Shining", 1970, false, "Stephen King"));
+        List<LibraryItem> itemList = new ArrayList<LibraryItem>();
+        itemList.add( new Book("Harry Potter", 1995, false, "JK Rowling"));
+        itemList.add( new Book("The Shining", 1970, false, "Stephen King"));
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         Library library = new Library(System.out, reader, itemList);
 

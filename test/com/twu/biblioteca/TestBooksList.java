@@ -4,7 +4,9 @@ import org.junit.Before;
 
 import java.io.BufferedReader;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.mockito.Mockito.*;
@@ -16,13 +18,13 @@ import static org.hamcrest.CoreMatchers.is;
  */
 public class TestBooksList {
 
-    Map<String,LibraryItem> itemList;
+   List<LibraryItem> itemList;
 
     @Before
     public void setUp(){
-        itemList = new HashMap<String,LibraryItem>();
-        itemList.put("Harry Potter", new Book("Harry Potter", 1995, false, "JK Rowling"));
-        itemList.put("The Shining", new Book("The Shining", 1970, false, "Stephen King"));
+        itemList = new ArrayList<LibraryItem>();
+        itemList.add( new Book("Harry Potter", 1995, false, "JK Rowling"));
+        itemList.add( new Book("The Shining", 1970, false, "Stephen King"));
     }
 
 

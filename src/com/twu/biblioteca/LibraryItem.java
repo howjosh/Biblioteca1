@@ -33,4 +33,12 @@ public abstract class LibraryItem {
     public boolean isCheckedOut() {
         return checkedOut;
     }
+
+    @Override
+    public boolean equals(Object _otherItem){
+
+        LibraryItem otherItem = (LibraryItem)_otherItem;
+        return title.equals(otherItem.getTitle());
+
+    }
 }
