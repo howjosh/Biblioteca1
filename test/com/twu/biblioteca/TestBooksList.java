@@ -1,7 +1,6 @@
 package com.twu.biblioteca;
 
 import org.junit.Before;
-import org.junit.Test;
 
 import java.io.BufferedReader;
 import java.io.PrintStream;
@@ -17,22 +16,22 @@ import static org.hamcrest.CoreMatchers.is;
  */
 public class TestBooksList {
 
-    Map<String,Book> bookList;
+    Map<String,LibraryItem> itemList;
 
     @Before
     public void setUp(){
-        bookList = new HashMap<String,Book>();
-        bookList.put("Harry Potter", new Book("Harry Potter", 1995, false,  "JK Rowling"));
-        bookList.put("The Shining", new Book("The Shining", 1970, false, "Stephen King"));
+        itemList = new HashMap<String,LibraryItem>();
+        itemList.put("Harry Potter", new Book("Harry Potter", 1995, false, "JK Rowling"));
+        itemList.put("The Shining", new Book("The Shining", 1970, false, "Stephen King"));
     }
 
 
     public void testListBooks(){
         BufferedReader reader = mock(BufferedReader.class);
         PrintStream printStream = mock(PrintStream.class);
-        Library library = new Library(printStream,reader,bookList);
+        Library library = new Library(printStream,reader, itemList);
 
-        library.display();
+        library.displayBooks();
         verify(printStream).println("The Shining                             |  Stephen King                            |  1970\n" +
                 "Harry Potter                            |  JK Rowling                              |  1995\n");
     }

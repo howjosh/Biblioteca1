@@ -10,11 +10,11 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        Map<String,Book> bookList = new HashMap<String,Book>();
-        bookList.put("Harry Potter", new Book("Harry Potter", 1995, false, "JK Rowling"));
-        bookList.put("The Shining", new Book("The Shining", 1970, false, "Stephen King"));
+        Map<String,LibraryItem> itemList = new HashMap<String,LibraryItem>();
+        itemList.put("Harry Potter", new Book("Harry Potter", 1995, false, "JK Rowling"));
+        itemList.put("The Shining", new Book("The Shining", 1970, false, "Stephen King"));
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        Library library = new Library(System.out, reader, bookList);
+        Library library = new Library(System.out, reader, itemList);
 
         HashMap<String,Command> commands = new HashMap<String, Command>();
         Command listBooksCommand = new ListBooksCommand(library);

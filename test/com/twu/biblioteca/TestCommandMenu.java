@@ -23,16 +23,16 @@ public class TestCommandMenu {
     private PrintStream printStream;
     private BufferedReader reader;
     private CommandMenu commandMenu;
-    Map<String,Book> bookList;
+    Map<String, LibraryItem> itemList;
 
 
     @Before
     public void setUp() {
         printStream = mock(PrintStream.class);
         reader = mock(BufferedReader.class);
-        bookList = new HashMap<String,Book>();
-        bookList.put("Harry Potter", new Book("Harry Potter", 1995, false, "JK Rowling"));
-        bookList.put("The Shining", new Book("The Shining", 1970, false, "Stephen King"));
+        itemList = new HashMap<String,LibraryItem>();
+        itemList.put("Harry Potter", new Book("Harry Potter", 1995, false, "JK Rowling"));
+        itemList.put("The Shining", new Book("The Shining", 1970, false, "Stephen King"));
     }
 
     @Test
@@ -70,7 +70,7 @@ public class TestCommandMenu {
     public void shouldDisplayBookList() throws IOException {
         HashMap<String, Command> commands = new HashMap<String, Command>();
         commandMenu = new CommandMenu(mock(PrintStream.class), reader, commands);
-        Command command = new ListBooksCommand(new Library(printStream, reader, bookList));
+        Command command = new ListBooksCommand(new Library(printStream, reader, itemList));
         commands.put("list",command);
         when(reader.readLine()).thenReturn("list");
 

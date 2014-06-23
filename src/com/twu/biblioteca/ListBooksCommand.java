@@ -12,7 +12,7 @@ public class ListBooksCommand implements Command {
 
     @Override
     public boolean execute() {
-        library.display();
+        library.displayBooks();
         return false;
     }
 }
