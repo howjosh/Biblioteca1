@@ -39,44 +39,38 @@ public class TestLibrary {
     }
 
 
-    public void shouldRemoveBookFromBookListOnCheckout() throws IOException {
-        Book book = new Book("Harry Potter", 1995, false, "JK Rowling");
-        List<LibraryItem> itemList = new ArrayList<LibraryItem>();
-        itemList.add(book);
 
-        Library library = new Library(printStream, reader, itemList);
+    @Test
+    public void testCheckoutItem() throws IOException {
 
-        when(reader.readLine()).thenReturn("Harry Potter");
+
+        when(reader.readLine()).thenReturn("checkout").thenReturn("Harry Potter");
         library.checkoutItem();
 
-        assertThat(book.isCheckedOut(), is(false));
+        verify(printStream).println("What is the title of the item?");
+        verify(printStream).println("Thank you! Enjoy the book.");
     }
 
     @Test
-    public void shouldAddBookToBookListOnReturn() throws IOException {
-        List<LibraryItem> itemList = new ArrayList<LibraryItem>();
-        Book book = new Book("Harry Potter", 1995, true, "JK Rowling");
-        itemList.add(book);
+    public void testReturnItem() throws IOException {
 
-        Library library = new Library(printStream, reader, itemList);
-        when(reader.readLine()).thenReturn("Harry Potter");
+        when(reader.readLine()).thenReturn("checkout").thenReturn("Harry Potter");
+        library.checkoutItem();
+
+        verify(printStream).println("What is the title of the item?");
+        verify(printStream).println("Thank you! Enjoy the book.");
+
+        when(reader.readLine()).thenReturn("return").thenReturn("Harry Potter");
         library.returnItem();
 
-        assertThat(book.isCheckedOut(), is(false));
+
+
+        verify(printStream).println("What is the title of the item?");
+        verify(printStream).println("Thank you for returning the book");
+
     }
 
-  /*  @Test
-    public void shouldNotDisplayCheckedOutBooks() {
-        int longestBook = "The Shining".length() + 4;
-        int longestAuthor = "Stephen King".length() + 4;
 
-        Book book = (Book)itemList.get("Harry Potter");
-        book.checkOut();
-        library.displayBooks();
-
-        String format = "%-" + longestBook + "s" + "%-" + longestAuthor + "s" + "%s\n";
-        verify(printStream, never()).printf(format, "Harry Potter", "JK Rowling", 1995);
-    }*/
 
     @Test
     public void shouldDisplayErrorForUnavailableBooks() throws IOException {
@@ -102,19 +96,10 @@ public class TestLibrary {
         when(reader.readLine()).thenReturn("Harry Potter");
         library.checkoutItem();
         verify(printStream).println("What is the title of the item?");
-        verify(printStream).println("Thank you! Enjoy the book");
+        verify(printStream).println("Thank you! Enjoy the book.");
     }
 
-/*    @Test
-    public void shouldDisplayReturnedBookMessageOnReturn() throws IOException {
-        when(reader.readLine()).thenReturn("Harry Potter");
-        Book book = (Book)itemList.get("Harry Potter");
-        book.checkOut();
 
-        library.returnItem();
-        verify(printStream).println("What is the title of the item?");
-        verify(printStream).println("Thank you for returning the book");
-    }*/
 
     @Test
      public void shouldDisplayErrorForBooksThatAreUnavailableToReturn() throws IOException {

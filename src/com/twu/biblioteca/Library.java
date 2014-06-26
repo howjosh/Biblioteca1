@@ -14,14 +14,15 @@ public class Library {
     List<LibraryItem> checkedoutList;
 
     private PrintStream printStream;
-    private BufferedReader reader;
+
+    LibraryHelper libraryHelper;
 
     public Library(PrintStream printStream, BufferedReader reader, List<LibraryItem> checkedInList) {
         this.checkedInList = checkedInList;
         this.printStream = printStream;
-        this.reader = reader;
 
         checkedoutList = new ArrayList<LibraryItem>();
+        libraryHelper = new LibraryHelper(printStream, reader, this.checkedInList, checkedoutList);
     }
 
     public void displayBooks() {
@@ -34,8 +35,8 @@ public class Library {
         }
 
         int padding = 4;
-        int maxTitleLength = returnLongestTitle(bookList) + padding;
-        int maxAuthorLength = returnLongestAuthor(bookList) + padding;
+        int maxTitleLength = libraryHelper.returnLongestTitle(bookList) + padding;
+        int maxAuthorLength = libraryHelper.returnLongestAuthor(bookList) + padding;
 
         String format = "%-" + maxTitleLength + "s" + "%-" + maxAuthorLength + "s" + "%s\n";
 
@@ -45,39 +46,25 @@ public class Library {
         }
     }
 
-    private int returnLongestTitle(List<Book> bookList) {
-        int maxTitleLength = 0;
-        for (Book book : bookList) {
-            if (!book.isCheckedOut() && book.getTitle().length() > maxTitleLength) {
-                maxTitleLength = book.getTitle().length();
-            }
-        }
-        return maxTitleLength;
-    }
-
-    private int returnLongestAuthor(List<Book> bookList) {
-        int maxAuthorLength = 0;
-        for (Book book : bookList) {
-            if (!book.isCheckedOut() && book.getAuthor().length() > maxAuthorLength) {
-                maxAuthorLength = book.getAuthor().length();
-            }
-        }
-        return maxAuthorLength;
-    }
-
 
     public void checkoutItem() throws IOException {
 
-        printStream.println("In checkoutItem()");
-        LibraryItem item = findItem();
+
+        LibraryItem item = libraryHelper.findItem();
 
         if (item != null && checkedInList.contains(item)) {
             item.checkOut();
             checkedInList.remove(item);
             checkedoutList.add(item);
 
-            printStream.println("Thank you! Enjoy the book");
+            printStream.println("Thank you! Enjoy the book.");
         } else {
+
+            if(item == null)
+                printStream.println("Item is null");
+
+            else
+                printStream.println("CheckedInList didn't contain the book.");
             printStream.println("That book is not available.");
         }
 
@@ -86,7 +73,7 @@ public class Library {
     public void returnItem() throws IOException {
 
 
-        LibraryItem item = findItem();
+        LibraryItem item = libraryHelper.findItem();
 
 
         if (item != null && checkedoutList.contains(item)) {
@@ -100,39 +87,7 @@ public class Library {
     }
 
 
-    private LibraryItem findItem() throws IOException {
 
 
-        printStream.println("In findItem()");
-
-        printStream.println("What is the title of the item?");
-        String itemTitle = reader.readLine();
-
-        for(LibraryItem item : checkedoutList)
-            if (item.getTitle().equals(itemTitle))
-                return item;
-
-
-        for(LibraryItem item : checkedInList)
-            if (item.getTitle().equals(itemTitle))
-                return item;
-
-
-
-        return null;
-
-    }
 
 }
-    /*private LibraryItem findItem() throws IOException {
-
-        printStream.println("What is the title of the item?");
-        String itemName = reader.readLine();
-        LibraryItem item = checkedInList.get(itemName);
-
-        if(item != null)
-            return item;
-
-        else return checkedoutList.get(itemName);
-    }
-}*/
