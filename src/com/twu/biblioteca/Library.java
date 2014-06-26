@@ -68,6 +68,7 @@ public class Library {
 
     public void checkoutItem() throws IOException {
 
+        printStream.println("In checkoutItem()");
         LibraryItem item = findItem();
 
         if (item != null && checkedInList.contains(item)) {
@@ -92,6 +93,7 @@ public class Library {
             item.returnItem();
             printStream.println("Thank you for returning the book");
             checkedInList.add(item);
+            checkedoutList.remove(item);
         } else {
             printStream.println("That is not a valid book to return.");
         }
@@ -100,12 +102,21 @@ public class Library {
 
     private LibraryItem findItem() throws IOException {
 
+
+        printStream.println("In findItem()");
+
         printStream.println("What is the title of the item?");
         String itemTitle = reader.readLine();
 
         for(LibraryItem item : checkedoutList)
-            if(item.getTitle().equals(itemTitle))
+            if (item.getTitle().equals(itemTitle))
                 return item;
+
+
+        for(LibraryItem item : checkedInList)
+            if (item.getTitle().equals(itemTitle))
+                return item;
+
 
 
         return null;
